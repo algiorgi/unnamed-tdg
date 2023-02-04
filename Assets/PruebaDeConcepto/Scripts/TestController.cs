@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace UnnamedTowerDefense.PruebaDeConcepto.Scripts
@@ -9,27 +10,44 @@ namespace UnnamedTowerDefense.PruebaDeConcepto.Scripts
         [SerializeField]
         private Nodo _nodoInicio;
 
-        private GameObject _visitanteInstancia;
+        private Queue<GameObject> _visitantes;
+
+        private void Awake()
+        {
+            _visitantes = new Queue<GameObject>();
+        }
 
         void Update()
         {
-            if (Input.GetKeyDown(KeyCode.T) && _visitanteInstancia == null)
+            if (Input.GetKeyDown(KeyCode.T))
             {
-                _visitanteInstancia = Instanciar();
+                Instanciar();
             }
 
-            if (Input.GetKeyDown(KeyCode.E) && _visitanteInstancia != null)
+            if (Input.GetKeyDown(KeyCode.E))
             {
-                Destroy(_visitanteInstancia.gameObject);
-                _visitanteInstancia = null;
+                Eliminar();
             }
         }
 
-        private GameObject Instanciar()
+        private void Instanciar()
         { 
             GameObject go = Instantiate(_visitantePrefab, _nodoInicio.transform.position + Vector3.left * 2f, Quaternion.identity);
             go.GetComponent<Visitante>().SetNodo(_nodoInicio);
-            return go;
+            _visitantes.Enqueue(go);
+        }
+
+        private void Eliminar()
+        {
+            if (_visitantes.Count > 0)
+            {
+                GameObject visitante = _visitantes.Dequeue();
+                Destroy(visitante.gameObject);
+            }
+            else
+            {
+                Debug.Log("No existen instancias para eliminar");
+            }
         }
     }
 }

@@ -20,7 +20,7 @@ namespace UnnamedTowerDefense.PruebaDeConcepto.Scripts
             Gizmos.DrawWireSphere(posicion, 0.5f);
 
             Vector2 offset = Vector2.up * 0.75f + Vector2.left * 0.75f;
-            Handles.Label(posicion + offset, nodo.Tipo.ToString());
+            Handles.Label(posicion + offset, nodo.gameObject.name);
 
             Nodo siguiente = nodo.Siguiente;
             if (siguiente == null) return;

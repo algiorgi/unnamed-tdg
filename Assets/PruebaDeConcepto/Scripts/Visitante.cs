@@ -28,6 +28,13 @@ namespace UnnamedTowerDefense.PruebaDeConcepto.Scripts
             _destino = nodoInicial;
         }
 
+        public void EnTienda()
+        {
+            _tiempoEnConsumir = 5f;
+            _tiempoDeArribo = Time.time;
+            _estado = Estado.EN_TIENDA;
+        }
+
         private void Update()
         {
             if (_destino == null) return;
@@ -66,13 +73,6 @@ namespace UnnamedTowerDefense.PruebaDeConcepto.Scripts
             {
                 _estado = Estado.CAMINANDO;
             }
-        }
-
-        private void OnTriggerEnter2D(Collider2D collision)
-        {
-            _tiempoEnConsumir = 5f;
-            _tiempoDeArribo = Time.time;
-            _estado = Estado.EN_TIENDA;
         }
     }
 }
